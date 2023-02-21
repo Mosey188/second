@@ -1,0 +1,20 @@
+import requests
+import time
+import json
+import random
+
+with open("proxy_list.txt", "r") as f:
+    proxy_list = [row.strip() for row in f]
+
+numberP = 0
+
+for proxy in proxy_list:
+    try:
+        numberP += 1
+        check_response = requests.get('https://rucaptcha.com', proxies={'https': proxy, 'http': proxy})
+        if str(check_response) == '<Response [200]>':
+            print(f'Proxy number {numberP} GOOD!')
+        else:
+            print(f'Proxy number {numberP} - problem w connect')
+    except Exception:
+        print(f'Problem w proxy number {numberP}')
